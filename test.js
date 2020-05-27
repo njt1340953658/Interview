@@ -76,3 +76,82 @@ publish.prototype =  {
     })
   }
 }
+
+
+function bubbleSort(arr) {
+  for (var i = 0; i < arr.length; i += 1) {
+    for (var j = 0; j < arr.length - 1; j += 1) {
+      if (arr[j] > arr[j + 1])
+      [arr[j], arr[j + 1]] = [ arr[j + 1], arr[j] ]
+    }
+  }
+  return arr;
+}
+
+function backtext (str) {
+  const index = Math.floor(str.length / 2);
+  for (var i = 0; i < index.length; i += 1) {
+    if (str[i] !== str[str.length - i - 1]) return false
+  }
+  return true
+}
+
+class Person  {
+  constructor(name) {
+    this.name = name
+  }
+  getName() {
+    return this.name
+  }
+}
+
+class Factory {
+  static create(name) {
+    new Person(name)
+  }
+}
+
+// 深度优先遍历类似树的先序遍历，从图的某个顶点开始先访问，然后依次从未被访问的它的邻接点触发度优先搜索遍历图，直至图中所有和v有路径相通的顶点都被访问到
+var deepTraversal = function (node, nodeList = []) {
+  if (node !== null) {
+    nodeList.push(node)
+    let children = node.children;
+    for (var i = 0; i < children.length; i += 1 ) {
+      deepTraversal(children[i], nodeList)
+    }
+    return nodeList;
+  }
+}
+
+// 广度优先遍历
+var withTraversal = function (node) {
+  var stack = [], nodes = [];
+  if (node !== null) {
+    stack.push(node) // 进队列
+    while(stack.length) {
+      var item = stack.shift();
+      var children = item.children;
+      nodes.push(children)
+      for (let i = 0; i < children.length; i++) {
+        stack.push(children[i])
+      }
+    }
+    return nodes;
+  }
+}
+
+// 快速排序
+function quickSort(arr) {
+  if (arr.length === 0) return []
+  var provie = Math.floor(arr.length / 2)
+  var mid = arr.splice(provie, 1)[0];
+  var left = [], right = []
+  for (var i = 0; i < arr.length; i += 1) {
+    if (arr[i] > mid) {
+      right.push(mid)
+    } else {
+      left.push(mid)
+    }
+  }
+  return quickSort(left).concat(mid, quickSort(right))
+}

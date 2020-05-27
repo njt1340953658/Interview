@@ -30,6 +30,31 @@ class Scheduler {
   }
 }
 
+// 实现一个带并发数限制的fetch请求函数
+function handleFetchQueue(urls, max, callback) {
+  const urlCount = urls.length;
+  const requestsQueue = [];
+  const results = [];
+  let i = 0;
+  const handleRequest = (url) => {
+    const req = fetch(url).then(res => {
+      const len = results.push(res);
+      if (len < urlCount && i + 1 < urlCount) {
+        requestsQueue.shift();
+        handleRequest(urls[++i])
+      } else if (len === urlCount) {
+        'function' === typeof callback && callback(results)
+      }
+    }).catch(e => {
+      results.push(e)
+    });
+    if (requestsQueue.push(req) < max) {
+      handleRequest(urls[++i])
+    }
+  };
+  handleRequest(urls[i])
+}
+
 /**
  * 二. 寻找数组中n个数和为m
  * 假如n是3和是13
@@ -62,7 +87,7 @@ var arr = [1, 3, 5, 7, 9]
 console.log(foo(arr, 13, 3));
 
 /**
- * 给定一个数组计算他们的交集
+ * 三、给定一个数组计算他们的交集
 */
 function intersection(num1, num2) {
   var result = num1.filter(item => {
@@ -76,7 +101,35 @@ function intersection(num1, num2) {
 }
 
 /**
- * 三. 实现合并乱序区间
+ * 四、找字符串中出现最多的字符
+*/
+function codeStr(str) {
+  var obj = {};
+  for (var i = 0; i < str.length; i++) {
+    var char = str.charAt(i);
+    if (obj[char]) {
+      obj[char]++;  //次数加1
+    } else {
+      obj[char] = 1;    //若第一次出现，次数记为1
+    }
+  }
+  //遍历对象，找到出现次数最多的字符的次数
+  var max = 0;
+  for (var key in obj) {
+    if (max < obj[key]) {
+      max = obj[key];   //max始终储存次数最大的那个
+    }
+  }
+  for (var key in obj) {
+    if (obj[key] == max) {
+      console.log("最多的字符是" + key);
+      console.log("出现的次数是" + max);
+    }
+  }
+}
+
+/**
+ * 五、实现合并乱序区间
  * */
 function merge(intervals) {
   if (!intervals || !intervals.length) return [];
@@ -97,11 +150,55 @@ function merge(intervals) {
 console.log(merge(arr))
 
 /**
- * 四.树的遍历有几种方式，实现下层次遍历
+ * 六、js实现链表的翻转
+*/
+
+function reverseList(head) {
+  if (!head) {
+    return head
+  }
+  if (!head.next) {
+    return head
+  }
+  var p1 = null, p2 = null, p3 = head;
+  while(p3) {
+    p1 = p2;
+    p2 = p3;
+    p3 = p3.next;
+    p2.next = p1;
+  }
+  return p2;
+}
+
+/**
+ * 七、两个有序链表和并成一个有序链表
+ * 
+*/
+var mergeTwoLists = function (l1, l2) {
+  var l3 = new ListNode(-1);
+  var c3 = l3;
+  while (l1 !== null && l2 !== null) {
+    if (l1.val <= l2.val) {
+      c3.next = l1;
+      l1 = l1.next;
+    } else {
+      c3.next = l2;
+      l2 = l2.next;
+    }
+    c3 = c3.next;
+  }
+  //循环完某一链表后，将另一链表剩下的部分直接加入到l3
+  c3.next = (l1 === null) ? l2 : l1;
+  return l3.next;
+
+};
+
+/**
+ * 八、树的遍历有几种方式，实现下层次遍历
 */
 
 /**
- * 五.判断对称二叉树
+ * 九、判断对称二叉树
 */
 function Tree(pTree) {
   if (!pTree) {
@@ -130,30 +227,7 @@ let tree = {
 console.log(Tree(tree));
 
 /**
- * 六.两个有序链表和并成一个有序链表
- * 
-*/
-var mergeTwoLists = function (l1, l2) {
-  var l3 = new ListNode(-1);
-  var c3 = l3;
-  while (l1 !== null && l2 !== null) {
-    if (l1.val <= l2.val) {
-      c3.next = l1;
-      l1 = l1.next;
-    } else {
-      c3.next = l2;
-      l2 = l2.next;
-    }
-    c3 = c3.next;
-  }
-  //循环完某一链表后，将另一链表剩下的部分直接加入到l3
-  c3.next = (l1 === null) ? l2 : l1;
-  return l3.next;
-
-};
-
-/**
- * 七.两个链表在某一点相交，求这个交叉点
+ * 十、两个链表在某一点相交，求这个交叉点
  * 1：判断这两个链表是否有环，2：这两个链表上没有环，3：这个两个链表都有环
  */
 
@@ -235,32 +309,4 @@ function getIntersectNode(pHead1, pHead2) {
   if (loop1 !== null && loop2 !== null)
     return bothLoop(pHead1, loop1, pHead2, loop2); // 有环
   return null;
-}
-
-/**
- * 找字符串中出现最多的字符
-*/
-function codeStr(str) {
-  var obj = {};
-  for (var i = 0; i < str.length; i++) {
-    var char = str.charAt(i);
-    if (obj[char]) {
-      obj[char]++;  //次数加1
-    } else {
-      obj[char] = 1;    //若第一次出现，次数记为1
-    }
-  }
-  //遍历对象，找到出现次数最多的字符的次数
-  var max = 0;
-  for (var key in obj) {
-    if (max < obj[key]) {
-      max = obj[key];   //max始终储存次数最大的那个
-    }
-  }
-  for (var key in obj) {
-    if (obj[key] == max) {
-      console.log("最多的字符是" + key);
-      console.log("出现的次数是" + max);
-    }
-  }
 }

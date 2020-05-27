@@ -34,6 +34,23 @@ var info = new ChildrenFn('999999')
 
 console.log(info)
 
+// 寄生组合
+function Parent() {
+  this.name = '小白'
+}
+
+Parent.prototype.getName = function(name) {
+  return name
+}
+
+function Student(name) {
+  Parent.call(this, name)
+}
+
+Student.prototype = Object.create(Parent.prototype)
+
+Student.prototype.constructor = Student;
+
 /**
  * 三、
  * es5和es6的继承之间的区别：
