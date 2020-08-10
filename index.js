@@ -175,3 +175,20 @@ var b = a;
 a.x = a = { n: 2 }
 
 console.log(a, b, a.x, b.x)
+
+
+// 工厂模式
+class Person {
+    constructor(name) {
+        this.name = name
+    }
+    getName() {
+        console.log(this.name)
+    }
+}
+class Factory {
+    static create(name) {
+        return new Person(name)
+    }
+}
+Factory.create('alanwu').getName()  //alanwu
