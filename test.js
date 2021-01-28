@@ -155,3 +155,47 @@ function quickSort(arr) {
   }
   return quickSort(left).concat(mid, quickSort(right))
 }
+
+// 实现一个带并发限制的fetch请求
+function handleRequest(urls, max, callback) {
+  const urlCount = urls.length, requestsQueue = [], result = [], i = 0;
+  const handleFetchQueue = (urls) => {
+    const req = fetch(urls).then(res => {
+      const len = result.push(res);
+      if (len < urlCount && i + 1 < urlCount) {
+        requestsQueue.shift();
+        handleFetchQueue(urls[i++])
+      }
+      if (len === urlCount) {
+        callback(result)
+      }
+    })
+    if (requestsQueue.push(req) < max) {
+      handleFetchQueue(urls[++i])
+    }
+  }
+  handleFetchQueue(urls[i])
+}
+
+// 实现一个简单性的symbol
+const symbol = (() => {
+  const cache = new Map();
+  function fn(key) {
+    if (this instanceof key) {
+      throw TypeError ('symbol is not constructor')
+    }
+    return {}
+  }
+  fn.for = function (key) {
+    if (!cache.has(key)) {
+      cache.set(key, {})
+    }
+    return cache.get(key)
+  }
+  fn.keyFor = function(value) {
+    for (let [ k, v ] of value) {
+      if (v === value) return k;
+    }
+  }
+  return fn;
+})()
