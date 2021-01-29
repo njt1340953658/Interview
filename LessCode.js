@@ -33,32 +33,9 @@ var twoSum = function(nums, target) {
 }
 
 /**
- * 2.求两数相加
- * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4) [2,4,3] [5,6,4]
- * 输出：7 -> 0 -> 8
- * 原因：342 + 465 = 807
+ * 2.相关算法题分析：
+* 实现一个带并发限制的异步调度器，保证同时最多运行两个任务
 */
-var addTwoNumbers = function(l1, l2) {
-  if (l1 === null && l2 == null) return null;
-  let dummy = new ListNode(0); // 设置指针存储链表头部
-  let head = dummy; // 设置指针指向dummynode
-  let addOne = 0; // 设置进位数
-  let sum = 0; // 设置对位相加和
-  while(l1 !== null || l2 !== null || addOne !== 0) {
-    sum = (l1 ? l1.val : 0) + (l2 ? l2.val : 0) + addOne; // 求出链表个位相加和
-    head.next = new ListNode(sum % 10); // 求出下个链表的值并重新指向head
-    head = head.next;
-    addOne = sum > 10 ? 1 : 0; // 求出我们的进制数
-    if (l1 !== null) l1 = l1.next
-    if (l2 !== null) l2 = l2.next
-  }
-  return dummy.next // 任何面试题型优先考虑输出无的情况
-}
-
-/**
- * 相关算法题分析：
-*/
-// 一.实现一个带并发限制的异步调度器，保证同时最多运行两个任务
 class Scheduler {
   constructor() {
     this.stack = [];
@@ -87,7 +64,7 @@ class Scheduler {
   }
 }
 
-// 实现一个带并发数限制的fetch请求函数
+// 3. 实现一个带并发数限制的fetch请求函数
 function handleFetchQueue(urls, max, callback) {
   const urlCount = urls.length;
   const requestsQueue = [];
@@ -113,7 +90,31 @@ function handleFetchQueue(urls, max, callback) {
 }
 
 /**
- * 二. 寻找数组中n个数和为m
+ * 4.求两数相加
+ * 输入：(2 -> 4 -> 3) + (5 -> 6 -> 4) [2,4,3] [5,6,4]
+ * 输出：7 -> 0 -> 8
+ * 原因：342 + 465 = 807
+*/
+var addTwoNumbers = function(l1, l2) {
+  if (l1 === null && l2 == null) return null;
+  let dummy = new ListNode(0); // 设置指针存储链表头部
+  let head = dummy; // 设置指针指向dummynode
+  let addOne = 0; // 设置进位数
+  let sum = 0; // 设置对位相加和
+  while(l1 !== null || l2 !== null || addOne !== 0) {
+    sum = (l1 ? l1.val : 0) + (l2 ? l2.val : 0) + addOne; // 求出链表个位相加和
+    head.next = new ListNode(sum % 10); // 求出下个链表的值并重新指向head
+    head = head.next;
+    addOne = sum > 10 ? 1 : 0; // 求出我们的进制数
+    if (l1 !== null) l1 = l1.next
+    if (l2 !== null) l2 = l2.next
+  }
+  return dummy.next // 任何面试题型优先考虑输出无的情况
+}
+
+
+/**
+ * 5. 寻找数组中n个数和为m
  * 假如n是3和是13
 */
 function foo(arr, m, n) {
@@ -144,7 +145,7 @@ var arr = [1, 3, 5, 7, 9]
 console.log(foo(arr, 13, 3));
 
 /**
- * 三、给定一个数组计算他们的交集
+ * 6、给定一个数组计算他们的交集
 */
 function intersection(num1, num2) {
   var result = num1.filter(item => {
@@ -158,7 +159,7 @@ function intersection(num1, num2) {
 }
 
 /**
- * 四、找字符串中出现最多的字符
+ * 7、找字符串中出现最多的字符
 */
 function codeStr(str) {
   var obj = {};
@@ -186,7 +187,7 @@ function codeStr(str) {
 }
 
 /**
- * 五、实现合并乱序区间
+ * 8、实现合并乱序区间
  * */
 function merge(intervals) {
   if (!intervals || !intervals.length) return [];
@@ -207,7 +208,7 @@ function merge(intervals) {
 console.log(merge(arr))
 
 /**
- * 六、js实现链表的翻转
+ * 9、js实现链表的翻转
 */
 
 function reverseList(head) {
@@ -228,7 +229,7 @@ function reverseList(head) {
 }
 
 /**
- * 七、两个有序链表和并成一个有序链表
+ * 10、两个有序链表和并成一个有序链表
  * 
 */
 var mergeTwoLists = function (l1, l2) {
@@ -251,11 +252,7 @@ var mergeTwoLists = function (l1, l2) {
 };
 
 /**
- * 八、树的遍历有几种方式，实现下层次遍历
-*/
-
-/**
- * 九、判断对称二叉树
+ * 11、判断对称二叉树
 */
 function Tree(pTree) {
   if (!pTree) {
@@ -284,7 +281,7 @@ let tree = {
 console.log(Tree(tree));
 
 /**
- * 十、两个链表在某一点相交，求这个交叉点
+ * 12、两个链表在某一点相交，求这个交叉点
  * 1：判断这两个链表是否有环，2：这两个链表上没有环，3：这个两个链表都有环
  */
 

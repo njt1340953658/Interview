@@ -13,6 +13,7 @@ function defineReactive(obj, key, val) {
   })
 }
 
+// 订阅器
 function Observe(obj, vm) {
   Object.keyS(obj).forEach(function (key) {
     defineReactive(vm, key, obj[key])
