@@ -1,10 +1,10 @@
 // bind 的实现方式
 Function.prototype.bind = function() {
   var self = this;
-  var context = [].prototype.shift.call(arguments);
-  var arg = [].prototype.slice.call(arguments)
+  var context = [].shift.call(arguments);
+  var arg = [].slice.call(arguments)
   return function() {
-    self.apply(context, [].concat.call(arg, [].prototype.slice.call(arguments)))
+    self.apply(context, [].concat.call(arg, [].slice.call(arguments)))
   }
 }
 
