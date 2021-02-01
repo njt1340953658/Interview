@@ -17,7 +17,7 @@ function Jsonp(url, param, callback) {
   }
   script.src=`${url}?${arr.join('&')}`
   document.body.appendChild(script)
-  window[callback] = function(data) {
+  callback = function(data) {
     console.log(data)
     document.removeChild(script)
   }
