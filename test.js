@@ -199,3 +199,53 @@ const symbol = (() => {
   }
   return fn;
 })()
+
+// call实现
+Function.prototype.myCall = function(context) {
+  context.fn = this;
+  const args = [...arguments].slice(1);
+  const result = context.fn(args);
+  delete context.fn;
+  return result
+}
+
+
+// BFC块级格式化上下文
+/**
+ * 1. 垂直盒子margin不会发生重叠
+ * 2. 内部的盒子会在垂直方向一个一个放置
+ * 3. BFC的区域不会与float盒子重叠
+ * 4. 计算BFC的高度时，浮动元素也参与计算
+ * 5. 每个元素的margin都在盒子的左边， 与包含块border盒子的左边相接触
+ * */ 
+
+//  http和tcp的区别
+/**
+ * http是应用层，处理数据包的问题，tcp是传输层，处理数据传输的过程；
+ * http是建立在tcp的基础上的；
+ * tcp三次握手
+ * http文本传输协议
+*/
+
+// 304是怎么产生的
+/**
+ * 协商缓存，客户端与服务器之间建立通信，首先客户端会携带if-modified-since字段，服务器会返会一个带，last-modified字端，
+ * 同时还提供一个if-none-match字段，并返回一个etag标识。这两个请求都是监测浏览器是否有缓存存在，若存在则，
+ * 返回一个304转态的请求，直接使用缓存；反之则返回一个200的状态，并覆盖旧的缓存
+*/
+
+// nginx的策略规则 => 内存占用率低、负载均衡、并发请求、动静分离
+/**
+ * 1. 轮询
+ * 2. 权重
+ * 3. hash ip
+ * 4. 插件
+*/
+
+/**
+ * node机制 => 事件驱动、异步IO、跨终端
+ * 1. timer
+ * 2. callback
+ * 3. poll
+ * 4. check
+ * */ 

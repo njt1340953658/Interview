@@ -100,13 +100,9 @@ function promiseAll(promises) {
 
 // 防抖
 /**
- * 动作绑定事件，
- * 动作发生后在一定时间内触发事件，
- * 在这段时间内，如果动作发生了，则重新等待一定时间在触发事件
- *
- * 原理：在每次函数执行前先清空上一次设置的定时器
+ * 在短时间内连续触发的事件，
+ * 在某个时间内，事件处理函数只执行一次。
  * */
-
 function debounce(fn, wait) {
   var timer;
   return function () {
@@ -121,16 +117,15 @@ function debounce(fn, wait) {
 
 // 节流
 /**
- * 动作绑定事件，动作发生后一段时间后触发事件，
- * 在这段时间内，如果动作有发生了，则无视该动作，直到时间执行完后，才能重新触发
- * 原理：在每次函数执行前先判断是否存在定时器，存在则跳过本次执行，否则设置定时器
+ * 在短时间内大量触发同一事件，那么在函数执行一次之后，
+ * 在这一时间内不再执行，直至时间过后才重新生效
  */
 function throttle(fn, wait) {
   var pre = Date().now();
   return function () {
     var now = Date.now();
     if (now - prev >= wait) {
-      fun.apply(this, arguments);
+      fn.apply(this, arguments);
       pre = Date.now();
     }
   };
@@ -179,16 +174,16 @@ console.log(a, b, a.x, b.x)
 
 // 工厂模式
 class Person {
-    constructor(name) {
-        this.name = name
-    }
-    getName() {
-        console.log(this.name)
-    }
+  constructor(name) {
+    this.name = name
+  }
+  getName() {
+    console.log(this.name)
+  }
 }
 class Factory {
-    static create(name) {
-        return new Person(name)
-    }
+  static create(name) {
+    return new Person(name)
+  }
 }
 Factory.create('alanwu').getName()  //alanwu
