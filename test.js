@@ -231,7 +231,7 @@ Function.prototype.myCall = function(context) {
 /**
  * 协商缓存，客户端与服务器之间建立通信，首先客户端会携带if-modified-since字段，服务器会返会一个带，last-modified字端，
  * 同时还提供一个if-none-match字段，并返回一个etag标识。这两个请求都是监测浏览器是否有缓存存在，若存在则，
- * 返回一个304转态的请求，直接使用缓存；反之则返回一个200的状态，并覆盖旧的缓存
+ * 返回一个304状态的请求，直接使用缓存；反之则返回一个200的状态，并覆盖旧的缓存
 */
 
 // nginx的策略规则 => 内存占用率低、负载均衡、并发请求、动静分离
@@ -249,3 +249,12 @@ Function.prototype.myCall = function(context) {
  * 3. poll
  * 4. check
  * */ 
+
+//  require和import的区别
+/**
+ * 1. 加载时间： require运行时加载和import编译时加载
+ * 2. 模块的本质：模块的require()是同步加载模块，import是异步加载模块
+ * 3. require是值的拷贝，import是值的引用
+ * 4. commonjs内部是非严格模式，es6模块字段采用严格模式
+ * 
+*/

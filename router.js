@@ -19,7 +19,7 @@ function Router() {
     this.route = function (path, callback) {
       // 创建url和组件的映射关系
       this.routes[path] = callback || function () { }
-    }
+  }
 }
 
 /**
