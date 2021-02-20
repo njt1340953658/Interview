@@ -209,6 +209,26 @@ Function.prototype.myCall = function(context) {
   return result
 }
 
+// 在一个不重复的数组寻找n个元素和为sum的方法 => 回溯法递归查找
+function getAllCombine(array, n, sum, temp = []) {
+  if (temp.length === n) {
+    if (temp.reduce((a, b) => a + b) === sum) {
+      return temp;
+    }
+    return false;
+  }
+  for(let i = 0; i < array.length; i ++) {
+    const current = array.shift();
+    temp.push(current);
+    let result = getAllCombine(array, n, sum, temp)
+    if (result) {
+      return result
+    }
+    temp.pop()
+    array.push(current)
+  }
+}
+
 
 // BFC块级格式化上下文
 /**
@@ -229,7 +249,7 @@ Function.prototype.myCall = function(context) {
 
 // 304是怎么产生的
 /**
- * 协商缓存，客户端与服务器之间建立通信，首先客户端会携带if-modified-since字段，服务器会返会一个带，last-modified字端，
+ * 协商缓存，客户端与服务器之间建立通信，首先客户端会携带if-modified-since字段，服务器会返会一个带last-modified字端，
  * 同时还提供一个if-none-match字段，并返回一个etag标识。这两个请求都是监测浏览器是否有缓存存在，若存在则，
  * 返回一个304状态的请求，直接使用缓存；反之则返回一个200的状态，并覆盖旧的缓存
 */
