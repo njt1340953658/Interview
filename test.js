@@ -268,6 +268,7 @@ function getAllCombine(array, n, sum, temp = []) {
  * 2. callback
  * 3. poll
  * 4. check
+ * 5. close
  * */ 
 
 //  require和import的区别

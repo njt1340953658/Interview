@@ -39,7 +39,7 @@ function created() {
 
 // bind的实现方式
 Function.prototype.bind = function () {
-  var self = this,
+  let self = this,
     context = [].shift.call(arguments),
     args = [].slice.call(arguments);
   return function () {
