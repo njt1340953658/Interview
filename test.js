@@ -8,21 +8,6 @@ Function.prototype.bind = function() {
   }
 }
 
-function Jsonp(url, param, callback) {
-  var script = document.createElement('script')
-  param = {...param, callback}
-  var arr = [];
-  for(var key in param) {
-    arr.push(`${key}=${param[key]}`)
-  }
-  script.src=`${url}?${arr.join('&')}`
-  document.body.appendChild(script)
-  callback = function(data) {
-    console.log(data)
-    document.removeChild(script)
-  }
-}
-
 Array.prototype.map = function(fn) {
   var newArr = []
   for(var i = 0; i < this.length; i += 1) {
@@ -140,6 +125,22 @@ var withTraversal = function (node) {
   }
 }
 
+
+function Jsonp(url, param, callback) {
+  var script = document.createElement('script')
+  param = {...param, callback}
+  var arr = [];
+  for(var key in param) {
+    arr.push(`${key}=${param[key]}`)
+  }
+  script.src=`${url}?${arr.join('&')}`
+  document.body.appendChild(script)
+  callback = function(data) {
+    console.log(data)
+    document.removeChild(script)
+  }
+}
+
 // 快速排序
 function quickSort(arr) {
   if (arr.length === 0) return []
@@ -209,7 +210,7 @@ Function.prototype.myCall = function(context) {
   return result
 }
 
-// 在一个不重复的数组寻找n个元素和为sum的方法 => 回溯法递归查找
+// 在一个不重复的数组中寻找n个元素和为sum的方法 => 回溯法递归查找
 function getAllCombine(array, n, sum, temp = []) {
   if (temp.length === n) {
     if (temp.reduce((a, b) => a + b) === sum) {
@@ -256,10 +257,11 @@ function getAllCombine(array, n, sum, temp = []) {
 
 // nginx的策略规则 => 内存占用率低、负载均衡、并发请求、动静分离
 /**
- * 1. 轮询
- * 2. 权重
- * 3. hash ip
- * 4. 插件
+ * 1. 轮询 每个请求按时间顺序逐一分配到不同的服务器
+ * 2. 权重 指定轮询几率，用户后端服务器不均的情况
+ * 3. ip_hash 每个请求按照访问的ip的hash分配，每个访问有固定的访问后端的服务器
+ * 4. 插件 按照后端返回的服务器时间分配，时间短则优先
+ * 5. url_hash
 */
 
 /**
@@ -279,3 +281,8 @@ function getAllCombine(array, n, sum, temp = []) {
  * 4. commonjs内部是非严格模式，es6模块字段采用严格模式
  * 
 */
+
+/**
+ * 1. 什么是作用域
+ * 作用域是指在运行时代码中的某些特定部分中变量，函数和对象的可访问性。换句话说：一个独立的地盘，让变量不会外泄、暴露出去。
+ * */ 

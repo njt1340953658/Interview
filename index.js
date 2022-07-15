@@ -47,6 +47,25 @@ Function.prototype.bind = function () {
   };
 };
 
+// call实现
+Function.prototype.myCall = function(context) {
+  context.fn = this;
+  const args = [...arguments].slice(1);
+  const result = context.fn(args);
+  delete context.fn;
+  return result
+}
+
+// 实现一个map方法
+Array.prototype.map = function () {
+  var arr = this, result = [];
+  var [fn, thisValue] = Array.prototype.slice.call(arguments);
+  for (var i = 0; i < arr.length; i++) {
+    result.push(fn.call(thisValue, arr[i], i, arr))
+  }
+  return result;
+}
+
 // promise的实现过程
 class Promise {
   constructor(process) {
@@ -131,15 +150,7 @@ function throttle(fn, wait) {
   };
 }
 
-// 实现一个map方法
-Array.prototype.map = function () {
-  var arr = this, result = [];
-  var [fn, thisValue] = Array.prototype.slice.call(arguments);
-  for (var i = 0; i < arr.length; i++) {
-    result.push(fn.call(thisValue, arr[i], i, arr))
-  }
-  return result;
-}
+
 
 /**
  * 考察js基础知识，比如变量的提升，原型继承，优先级等
@@ -168,7 +179,6 @@ new new Foo().getName(); // 3
 var a = { n: 1 }
 var b = a;
 a.x = a = { n: 2 }
-
 console.log(a, b, a.x, b.x)
 
 
